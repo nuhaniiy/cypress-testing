@@ -1,9 +1,11 @@
 describe('Add to Cart Test on Saucedemo', () => {
     it('Logs in and adds an item to cart', () => {
+      cy.fixture('userData').then((user) => {
+        const standardUser = user.standardUser;
       // Login dulu
       cy.visit('https://www.saucedemo.com/', { timeout: 120000 });
-      cy.get('#user-name').type('standard_user');
-      cy.get('#password').type('secret_sauce');
+      cy.get('#user-name').type(standardUser.username);
+      cy.get('#password').type(standardUser.password);
       cy.get('#login-button').click();
       cy.url().should('include', '/inventory.html');
       
@@ -24,3 +26,4 @@ describe('Add to Cart Test on Saucedemo', () => {
       cy.contains('Sauce Labs Bike Light').should('be.visible');
     });
   });
+});
